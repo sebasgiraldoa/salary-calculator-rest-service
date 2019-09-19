@@ -1,13 +1,10 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using SalaryCalculator.Web.Helper;
+using SalaryCalculator.Web.Models;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Newtonsoft.Json;
-using SalaryCalculator.Web.Helper;
-using SalaryCalculator.Web.Models;
 
 namespace SalaryCalculator.Web.Controllers
 {
@@ -43,22 +40,22 @@ namespace SalaryCalculator.Web.Controllers
 			return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
 		}
 
-		public JsonResult GetEmployeeInformation(string data)
+		[HttpGet]
+		public async Task<IEnumerable<Employee>> GetEmployeeInformation(string data)
 		{
-			Employee employee = new Employee();
 			List<Employee> results = new List<Employee>();
 			Employee result;
 			if (!string.IsNullOrEmpty(data))
 			{
-				result = Task.Run(async () => { return await Common.Get(int.Parse(data)); }).Result;
+				result = await Common.Get(int.Parse(data));
 				results.Add(result);
 			}
 			else
 			{
-				results = Task.Run(async () => { return await Common.GetAll(); }).Result;
+				results = await Common.GetAll();
 			}
 
-			return Json(JsonConvert.SerializeObject(results));
+			return results;
 		}
 	}
 }

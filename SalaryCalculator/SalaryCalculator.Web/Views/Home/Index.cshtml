@@ -25,41 +25,69 @@
             url: '/Home/GetEmployeeInformation/',
             data: { data: document.getElementById('txtId').value },
             cache: false,
-            success: function (result) {
-
-                alert(result);
+            success: function (data) {
+                $("#table-employees tbody tr").remove();
+                $.each(data, function (index, val) {
+                    var row =
+                        "<tr>" +
+                        "<td>" + val.id + "</td>" +
+                        "<td>" + val.name + "</td>" +
+                        "<td>" + val.contractTypeName + "</td>" +
+                        "<td>" + val.roleId + "</td>" +
+                        "<td>" + val.roleName + "</td>" +
+                        "<td>" + val.roleDescription + "</td>" +
+                        "<td>" + val.hourlySalary + "</td>" +
+                        "<td>" + val.monthlySalary + "</td>" +
+                        "<td><b>" + val.annualSalary + "</b></td>" +
+                        "</tr>";
+                    $('#table-employees').append(row);
+                });
             }
         });
     }
 </script>
 <div class="row">
-    <div class="col-md-3">
-        @model IEnumerable<SalaryCalculator.Web.Models.Employee>
-        <div class="row" style="margin-top:30px; margin-bottom:30px">
-            <div class="col-md-12">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="false">
-                                    <div class="col-lg-6" style="padding:0">
-                                        <input type="text" id="txtId" placeholder="employeeId" class="txtForm" style="width:100%;" />
-                                    </div>
+
+    @model IEnumerable<SalaryCalculator.Web.Models.Employee>
+    <div class="row" style="margin-top:30px; margin-bottom:30px">
+        <div>
+            <div class="panel panel-default">
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div>
+                                <div style="padding:0" class="col-md-2">
+                                    <input type="text" id="txtId" placeholder="employeeId" class="txtForm" />
+                                </div>
+                                <div style="padding:0" class="col-md-2">
+                                    <input id="btnGetEmployee" class="btn btnForm" onclick="GetEmployeeInformation();" value="Get Employees" title="Search" type="button" style="width:250px !important;" />
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="panel-footer text-center">
-                        <div class="row">
-                            <div class="col-md-12">
-                                <input id="btnGetEmployee" class="btn btnForm" onclick="GetEmployeeInformation();" value="Get Employees" title="Search" type="button" style="width:250px !important;" />
-                            </div>
-                        </div>
+                    <br />
+                    <div class="table-responsive">
+                        <table class="table table-hover" id="table-employees">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Contract Type Name</th>
+                                    <th>Role Id</th>
+                                    <th>Role Name</th>
+                                    <th>Role Description</th>
+                                    <th>Hourly Salary</th>
+                                    <th>Monthly Salary</th>
+                                    <th>Annual Salary</th>
+                                </tr>
+                            </thead>
+                            <tbody></tbody>
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
-        <table class="table" id="tblEmployeeInformation"></table>
+        
     </div>
 
 </div>
