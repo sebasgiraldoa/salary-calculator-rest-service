@@ -20,7 +20,6 @@ namespace SalaryCalculator.API.Controllers
 
 		[HttpGet]
 		[Route("GetAll")]
-		//[ApiExplorerSettings(IgnoreApi =true)]
 		[Produces("application/json")]
 		public async Task<IEnumerable<EmployeeDTO>> GetAll()
 		{

@@ -62,24 +62,18 @@ namespace SalaryCalculator.API
 			{
 				app.UseDeveloperExceptionPage();
 			}
-			else
-			{
-				app.UseExceptionHandler("/Home/Error");
-				app.UseHsts();
-			}
-
 			
 			app.UseStaticFiles();
 			app.UseCookiePolicy();
 
+			app.UseMvc();
 			app.UseSwagger();
 			app.UseSwaggerUI(c =>
 			{
 				c.SwaggerEndpoint("/swagger/v1/swagger.json", "Salary calculator Demo");
 			});
 
-			app.UseHttpsRedirection();
-			app.UseMvc();
+			app.UseHttpsRedirection();		
 		}
 	}
 }

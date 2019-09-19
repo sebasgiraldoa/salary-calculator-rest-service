@@ -1,7 +1,6 @@
 ﻿using AutoMapper;
 using SalaryCalculator.API.Models;
 using SalaryCalculator.API.Models.DTO;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,8 +9,8 @@ namespace SalaryCalculator.API.Core
 {
 	public class EmployeeManager : IEmployeeManager
 	{
-		private const string ContractTypeHourly = "HourlySalaryEmployee";
-		private const string ContractTypeMonthly = "MonthlySalaryEmployee";
+		private const string HourlyContractType = "HourlySalaryEmployee";
+		private const string MonthlyContractType = "MonthlySalaryEmployee";
 
 		private readonly IEmployeeRepository _employeeRepository;
 		private readonly IMapper _mapper;
@@ -43,13 +42,13 @@ namespace SalaryCalculator.API.Core
 
 			foreach (var employee in employees)
 			{
-				if (employee.ContractTypeName == ContractTypeHourly)
+				if (employee.ContractTypeName == HourlyContractType)
 				{
 					var hourlyEmployee = _mapper.Map<EmployeeApi, HourlyEmployee>(employee);
 					hourlyEmployee.CalculateSalary();
 					result.Add(_mapper.Map<HourlyEmployee, EmployeeDTO>(hourlyEmployee));
 				}
-				else if (employee.ContractTypeName == ContractTypeMonthly)
+				else if (employee.ContractTypeName == MonthlyContractType)
 				{
 					var monthlyEmployee = _mapper.Map<EmployeeApi, MonthlyEmployee>(employee);
 					monthlyEmployee.CalculateSalary();
